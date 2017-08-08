@@ -1,7 +1,31 @@
-<ul>
-    {{#each recipes}}
-        <li><a href="/{{id}}">{{name}}, {{cookingTime}}, {{ingredients}}</a></li>
-    {{/each}}
-</ul>
-<small>recipes found: {{count}}</small>
+<section>
+    <h1>Food / recipe app</h1>
+    <input placeholder="Recipe"/>
+    <input placeholder="Ingredients"/>
+    <select>
+        <option>All cooking times</option>
+        {{#each cookingTimes}}
+            <option value="{{cookingTime}}">{{cookingTime}} minutes</option>
+        {{/each}}
+    </select>
+    <table style="width:100%">
+        <tr>
+            <td><h4>Recipe name: </h4></td>
+            <td><h4>Cooking time: </h4></td>
+            <td><h4>Ingredients: </h4></td>
+        </tr>
+        {{#each recipes}}
+            <tr>
+                <td>
+                    <a href="/{{id}}">{{name}}</a>
+                </td>
+                <td>{{cookingTime}} minutes</td>
+                <td>{{ingredients}}</td>
+            </tr>
+        {{/each}}
+        <tr>
+            <td><small>recipes found: {{count}}</small></td>
+        </tr>
+    </table>
+</section>
 
