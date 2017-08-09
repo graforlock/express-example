@@ -53,6 +53,10 @@ input {
   text-align: center;
 }
 
+.recipe-page__login {
+  text-align: center;
+}
+
 fieldset, label { margin: 0; padding: 0; }
 body{ margin: 20px; }
 
@@ -80,13 +84,10 @@ body{ margin: 20px; }
  float: right; 
 }
 
-/***** CSS Magic to Highlight Stars on Hover *****/
-
-.rating > input:checked ~ label, /* show gold star when clicked */
-.rating:not(:checked) > label:hover, /* hover current star */
-.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
-
-.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label, 
+.rating:not(:checked) > label:hover, 
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } 
+.rating > input:checked + label:hover, 
 .rating > input:checked ~ label:hover,
-.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > label:hover ~ input:checked ~ label, 
 .rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 

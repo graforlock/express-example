@@ -6,6 +6,8 @@ const { AVAILABLE_FILTERS, PAGE } = require('../constants');
 
 const asyncMiddleware = require('../middleware/async');
 const pagination = require('../services/pagination');
+
+const Rating = require('../models/rating');
 const Recipe = require('../models/recipe');
 
 router.use(paginate.middleware(10, 50));
@@ -37,19 +39,22 @@ router.get('/', async (req, res, next) => {
 router.get(
     '/:recipe',
     asyncMiddleware(async (req, res, next) => {
+        let rating;
         const recipe = await Recipe.findById(req.params.recipe);
-        res.render('recipe', { recipe });
-    })
-);
-
-router.post(
-    '/:recipe',
-    asyncMiddleware(async ({ body, params }, res, next) => {
-        await Recipe.update(
-            { _id: params.recipe },
-            { $set: { stars: body.rating } }
-        );
-        res.redirect(`/${params.recipe}`);
+        if (req.user) {
+            rating = await Rating.findOne({
+                accountId: req.user._id,
+                recipeId: recipe._id
+            });
+        }
+        // A single call option might be to keep ratings within Account.
+        // However, in the long run, the account might not be the best place
+        // to make recommendation engines if needed.
+        res.render('recipe', {
+            recipe,
+            user: !!req.user,
+            rating: rating || { stars: 0 }
+        });
     })
 );
 

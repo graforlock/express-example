@@ -1,1 +1,0 @@
-exports.sockets = require('./sockets');
