@@ -10,3 +10,13 @@ h1 {
 a {
   color: #00B7FF;
 }
+
+.pagination {
+  text-align: center;
+}
+
+.pagination__item--disabled {
+  color: gray;
+  text-decoration: none;
+  pointer-events: none;
+}

@@ -15,17 +15,17 @@ router.get('/', async (req, res, next) => {
     const cookingTimes = await Recipe.distinct('cookingTime');
     const { ingredients, recipe, time } = req.query;
     const paginateBounds = { page: req.query.page, limit: PAGE.LIMIT };
-    const queryObject = time ? { cookingTime: Number(time)} : {};
-   
+    const queryObject = time ? { cookingTime: Number(time) } : {};
+
     if (recipe || ingredients) {
         const $search = recipe && ingredients
             ? `"${recipe}" ${ingredients}`
             : recipe || ingredients;
 
         recipes = await Recipe.paginate(
-                Object.assign({ $text: { $search }}, queryObject),
-                paginateBounds
-            )
+            Object.assign({ $text: { $search } }, queryObject),
+            paginateBounds
+        );
     } else {
         recipes = await Recipe.paginate(queryObject, paginateBounds);
     }
