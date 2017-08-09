@@ -42,4 +42,9 @@ router.get(
     })
 );
 
+router.post('/:recipe', asyncMiddleware(async ({ body, params }, res, next) => {
+    await Recipe.update({_id: params.recipe }, { $set: { stars: body.rating}});
+    res.redirect(`/${params.recipe}`);
+}));
+
 module.exports = router;

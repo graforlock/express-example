@@ -1,5 +1,4 @@
 const paginate = require('express-paginate');
-
 const { PAGE } = require('../constants');
 
 module.exports = (req, pages) => 
