@@ -1,7 +1,7 @@
 <section>
     <h1>Food / recipe app</h1>
      {{#if total}} 
-        <form action="/">
+        <form action="/" method="POST">
             <input placeholder="Recipe" id="recipe" name="recipe"/>
             <input placeholder="Ingredients" id="ingredients" name="ingredients"/>
             <select id="time" name="time">
@@ -14,9 +14,9 @@
         </form>
         <table style="width:100%">
             <tr>
-                <td><h4>Recipe name: </h4></td>
-                <td><h4>Cooking time: </h4></td>
-                <td><h4>Ingredients: </h4></td>
+                <td><h4>Name</h4></td>
+                <td><h4>Cooking Time</h4></td>
+                <td><h4>Main Ingredients</h4></td>
             </tr>
             {{#each docs}}
                 <tr>
