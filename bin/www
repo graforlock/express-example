@@ -9,7 +9,7 @@
  }
 
 const app = require('../app');
-const db = require('../db');
+const mongoose = require('mongoose');
 const services = require('../services');
 const debug = require('debug')('task:server');
 const http = require('http');
@@ -31,17 +31,18 @@ const server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-db.sync().then(function() {
-  const connection = server.listen(port, function(err) {
-    if (err) {
-      console.error(err);
-    } else {
-      server.on('error', onError);
-      server.on('listening', onListening);
-      console.info("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", port, port);
-    }
-  });
-  services.sockets(connection);
+mongoose.connect(process.env.MONGODB_DATABASE);
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+server.listen(port, function(err) {
+  if (err) {
+    console.error(err);
+  } else {
+    server.on('error', onError);
+    server.on('listening', onListening);
+    console.info("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", port, port);
+  }
 });
 
 

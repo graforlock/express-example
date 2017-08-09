@@ -1,31 +1,35 @@
 <section>
     <h1>Food / recipe app</h1>
-    <input placeholder="Recipe"/>
-    <input placeholder="Ingredients"/>
-    <select>
-        <option>All cooking times</option>
-        {{#each cookingTimes}}
-            <option value="{{cookingTime}}">{{cookingTime}} minutes</option>
-        {{/each}}
-    </select>
-    <table style="width:100%">
-        <tr>
-            <td><h4>Recipe name: </h4></td>
-            <td><h4>Cooking time: </h4></td>
-            <td><h4>Ingredients: </h4></td>
-        </tr>
-        {{#each recipes}}
+     {{#if count}} 
+        <input placeholder="Recipe"/>
+        <input placeholder="Ingredients"/>
+        <select>
+            <option>All cooking times</option>
+            {{!-- {{#each cookingTimes}}
+                <option value="{{cookingTime}}">{{cookingTime}} minutes</option>
+            {{/each}} --}}
+        </select>
+        <table style="width:100%">
             <tr>
-                <td>
-                    <a href="/{{id}}">{{name}}</a>
-                </td>
-                <td>{{cookingTime}} minutes</td>
-                <td>{{ingredients}}</td>
+                <td><h4>Recipe name: </h4></td>
+                <td><h4>Cooking time: </h4></td>
+                <td><h4>Ingredients: </h4></td>
             </tr>
-        {{/each}}
-        <tr>
-            <td><small>recipes found: {{count}}</small></td>
-        </tr>
-    </table>
+            {{#each recipes}}
+                <tr>
+                    <td>
+                        <a href="/{{_id}}">{{name}}</a>
+                    </td>
+                    <td>{{cookingTime}} minutes</td>
+                    <td>{{ingredients}}</td>
+                </tr>
+            {{/each}}
+            <tr>
+                <td><small>recipes found: {{count}}</small></td>
+            </tr>
+        </table>
+     {{else}}
+        <p>Sorry, we currently have no recipes for you</p>
+    {{/if}} 
 </section>
 
