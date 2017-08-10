@@ -1,18 +1,22 @@
 <section class="index-page">
     <h1>Food & Recipe app</h1>
     <form action="/">
-        <input placeholder="Recipe" id="recipe" name="recipe"/>
-        <input placeholder="Ingredients" id="ingredients" name="ingredients"/>
+        <input placeholder="Recipe" id="recipe" name="recipe" value="{{filters.recipe}}"/>
+        <input placeholder="Ingredients" id="ingredients" name="ingredients" value="{{filters.ingredients}}"/>
         <select id="time" name="time">
             <option value="">All cooking times</option>
             {{#each cookingTimes}}
-                <option value="{{this}}">{{this}} minutes</option>
+                {{#if (eq ../filters.time this)}}
+                    <option value="{{this}}" selected>{{this}} minutes</option>
+                {{else}}
+                    <option value="{{this}}">{{this}} minutes</option>
+                {{/if}}
             {{/each}} 
         </select>
         <button type="submit">Apply filter</button>
         <a href="/">Clear filters</a>
     </form>
-     {{#if total}} 
+    {{#if total}} 
         <table style="width:100%">
             <tr>
                 <td><h4>Name</h4></td>
@@ -41,9 +45,10 @@
                 {{/if}}
             {{/each}}
         </div>
-     {{else}}
-        <p>Sorry, nothing matched your filter term</p>
-        {{!-- <p>Sorry, we currently have no recipes for you</p> --}}
+    {{else if (hasFilters filters)}}
+        <p class="index-page__sorry-msg">Sorry, nothing matched your filter term</p> 
+    {{else}}
+        <p class="index-page__sorry-msg">Sorry, we currently have no recipes for you</p> 
     {{/if}} 
 </section>
 

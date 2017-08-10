@@ -33,6 +33,8 @@ router.get('/', async (req, res, next) => {
     }
     recipes.cookingTimes = cookingTimes;
     recipes.pagination = pagination(req, recipes.pages);
+    recipes.filters = req.query;
+    console.log(recipes.filters);
     res.render('index', recipes);
 });
 
@@ -41,6 +43,7 @@ router.get(
     asyncMiddleware(async (req, res, next) => {
         let rating;
         const recipe = await Recipe.findById(req.params.recipe);
+
         if (req.user) {
             rating = await Rating.findOne({
                 accountId: req.user._id,

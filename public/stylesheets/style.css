@@ -36,6 +36,14 @@ input {
   border: 1px solid gainsboro;
 }
 
+.error-page__message {
+  text-align: center;
+}
+
+.index-page__sorry-msg {
+  text-align: center;
+}
+
 .login-page {
   text-align: center;
 }
