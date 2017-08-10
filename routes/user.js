@@ -3,13 +3,24 @@ const passport = require('passport');
 const Account = require('../models/account');
 const Rating = require('../models/rating');
 
+const asyncMiddleware = require('../middleware/async');
+const loggedIn = require('../middleware/loggedIn');
+
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-    const ratings = await Rating.find({ accountId: req.user._id, stars: { $gt: 0 } })
-        .populate('recipeId');
-    res.render('profile', { user: req.user, ratings });
-});
+router.get(
+    '/',
+    loggedIn,
+    asyncMiddleware(async (req, res) => {
+        const ratings = await Rating.find({
+            accountId: req.user._id,
+            stars: { $gt: 0 }
+        })
+            .populate('recipeId')
+            .sort({ stars: 1 });
+        res.render('profile', { user: req.user, ratings });
+    }
+));
 
 router.get('/register', (req, res) => {
     res.render('register', {});
