@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
 
     if (recipe || ingredients) {
         const $search = recipe && ingredients
-            ? `"${recipe}" ${ingredients}`
+            ? `"${ingredients}" ${recipe}`
             : recipe || ingredients;
 
         recipes = await Recipe.paginate(
@@ -34,7 +34,6 @@ router.get('/', async (req, res, next) => {
     recipes.cookingTimes = cookingTimes;
     recipes.pagination = pagination(req, recipes.pages);
     recipes.filters = req.query;
-    console.log(recipes.filters);
     res.render('index', recipes);
 });
 

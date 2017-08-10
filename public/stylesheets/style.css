@@ -69,6 +69,10 @@ input {
   padding: 5px 10px;
 }
 
+.profile-page__username {
+  text-align: center;
+}
+
 .recipe-page__rating  {
   text-align: center;
 }
