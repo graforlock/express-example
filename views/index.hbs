@@ -1,54 +1,54 @@
 <section class="index-page">
-    <h1>Food & Recipe app</h1>
-    <form action="/">
-        <input placeholder="Recipe" id="recipe" name="recipe" value="{{filters.recipe}}"/>
-        <input placeholder="Ingredients" id="ingredients" name="ingredients" value="{{filters.ingredients}}"/>
-        <select id="time" name="time">
-            <option value="">All cooking times</option>
-            {{#each cookingTimes}}
-                {{#if (eq ../filters.time this)}}
-                    <option value="{{this}}" selected>{{this}} minutes</option>
-                {{else}}
-                    <option value="{{this}}">{{this}} minutes</option>
-                {{/if}}
-            {{/each}} 
-        </select>
-        <button type="submit">Apply filter</button>
-        <a href="/">Clear filters</a>
-    </form>
-    {{#if total}} 
-        <table style="width:100%">
-            <tr>
-                <td><h4>Name</h4></td>
-                <td><h4>Cooking Time</h4></td>
-                <td><h4>Main Ingredients</h4></td>
-            </tr>
-            {{#each docs}}
-                <tr>
-                    <td>
-                        <a href="/{{_id}}">{{name}}</a>
-                    </td>
-                    <td>{{cookingTime}} minutes</td>
-                    <td>{{ingredients}}</td>
-                </tr>
-            {{/each}}
-            <tr>
-                <td><small>Found {{total}} recipes.</small></td>
-            </tr>
-        </table>
-        <div class="pagination">
-            {{#each pagination}}
-                {{#if (eq ../page number)}}
-                    <a href="#" class="pagination__item--disabled">{{number}}</a>
-                {{else}}
-                    <a href="{{url}}" class="pagination__item">{{number}}</a>
-                {{/if}}
-            {{/each}}
-        </div>
-    {{else if (hasFilters filters)}}
-        <p class="index-page__sorry-msg">Sorry, nothing matched your filter term</p> 
-    {{else}}
-        <p class="index-page__sorry-msg">Sorry, we currently have no recipes for you</p> 
-    {{/if}} 
+  <h1>Food & Recipe app</h1>
+  <form action="/">
+    <input placeholder="Recipe" id="recipe" name="recipe" value="{{filters.recipe}}"/>
+    <input placeholder="Ingredients" id="ingredients" name="ingredients" value="{{filters.ingredients}}"/>
+    <select id="time" name="time">
+      <option value="">All cooking times</option>
+      {{#each cookingTimes}}
+        {{#if (eq ../filters.time this)}}
+          <option value="{{this}}" selected>{{this}} minutes</option>
+        {{else}}
+          <option value="{{this}}">{{this}} minutes</option>
+        {{/if}}
+      {{/each}} 
+    </select>
+    <button type="submit">Apply filter</button>
+    <a href="/">Clear filters</a>
+  </form>
+  {{#if total}} 
+    <table style="width:100%">
+      <tr>
+        <td><h4>Name</h4></td>
+        <td><h4>Cooking Time</h4></td>
+        <td><h4>Main Ingredients</h4></td>
+      </tr>
+      {{#each docs}}
+        <tr>
+          <td>
+            <a href="/{{_id}}">{{name}}</a>
+          </td>
+          <td>{{cookingTime}} minutes</td>
+          <td>{{ingredients}}</td>
+        </tr>
+      {{/each}}
+      <tr>
+        <td><small>Found {{total}} recipes.</small></td>
+      </tr>
+    </table>
+    <div class="pagination">
+      {{#each pagination}}
+        {{#if (eq ../page number)}}
+          <a href="#" class="pagination__item--disabled">{{number}}</a>
+        {{else}}
+          <a href="{{url}}" class="pagination__item">{{number}}</a>
+        {{/if}}
+      {{/each}}
+    </div>
+  {{else if (hasFilters filters)}}
+    <p class="index-page__sorry-msg">Sorry, nothing matched your filter term</p> 
+  {{else}}
+    <p class="index-page__sorry-msg">Sorry, we currently have no recipes for you</p> 
+  {{/if}} 
 </section>
 

@@ -13,51 +13,49 @@ const Recipe = require('../models/recipe');
 router.use(paginate.middleware(10, 50));
 
 router.get('/', async (req, res, next) => {
-    let recipes;
-    const cookingTimes = await Recipe.distinct('cookingTime');
-    const { ingredients, recipe, time } = req.query;
-    const paginateBounds = { page: req.query.page, limit: PAGE.LIMIT };
-    const queryObject = time ? { cookingTime: Number(time) } : {};
+  let recipes;
+  const cookingTimes = await Recipe.distinct('cookingTime');
+  const { ingredients, recipe, time } = req.query;
+  const paginateBounds = { page: req.query.page, limit: PAGE.LIMIT };
+  const queryObject = time ? { cookingTime: Number(time) } : {};
 
-    if (recipe || ingredients) {
-        const $search = recipe && ingredients
-            ? `"${ingredients}" ${recipe}`
-            : recipe || ingredients;
+  if (recipe || ingredients) {
+    const $search = recipe && ingredients && `"${ingredients}" ${recipe}`
 
-        recipes = await Recipe.paginate(
-            Object.assign({ $text: { $search } }, queryObject),
-            paginateBounds
-        );
-    } else {
-        recipes = await Recipe.paginate(queryObject, paginateBounds);
-    }
-    recipes.cookingTimes = cookingTimes;
-    recipes.pagination = pagination(req, recipes.pages);
-    recipes.filters = req.query;
-    res.render('index', recipes);
+    recipes = await Recipe.paginate(
+      Object.assign({ $text: { $search } }, queryObject),
+      paginateBounds
+    );
+  } else {
+    recipes = await Recipe.paginate(queryObject, paginateBounds);
+  }
+  recipes.cookingTimes = cookingTimes;
+  recipes.pagination = pagination(req, recipes.pages);
+  recipes.filters = req.query;
+  res.render('index', recipes);
 });
 
 router.get(
-    '/:recipe',
-    asyncMiddleware(async (req, res, next) => {
-        let rating;
-        const recipe = await Recipe.findById(req.params.recipe);
+  '/:recipe',
+  asyncMiddleware(async (req, res, next) => {
+    let rating;
+    const recipe = await Recipe.findById(req.params.recipe);
 
-        if (req.user) {
-            rating = await Rating.findOne({
-                accountId: req.user._id,
-                recipeId: recipe._id
-            });
-        }
-        // A single call option might be to keep ratings within Account.
-        // However, in the long run, the account might not be the best place
-        // to make recommendation engines if needed.
-        res.render('recipe', {
-            recipe,
-            user: !!req.user,
-            rating: rating || { stars: 0 }
-        });
-    })
+    if (req.user) {
+      rating = await Rating.findOne({
+        accountId: req.user._id,
+        recipeId: recipe._id
+      });
+    }
+    // A single call option might be to keep ratings within Account.
+    // However, in the long run, the account might not be the best place
+    // to make recommendation engines if needed.
+    res.render('recipe', {
+      recipe,
+      user: !!req.user,
+      rating: rating || { stars: 0 }
+    });
+  })
 );
 
 module.exports = router;

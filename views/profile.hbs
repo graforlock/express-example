@@ -1,23 +1,23 @@
 {{#with user }}
-    <section class="profile-page">
-        <h1 class="profile-page__header">Profile page</h1>
-        <h4 class="profile-page__username">Username: {{ username }}</h4>
-        {{#if ../ratings.length}}
-            <h4>Ratings: </h4>
-            <ul class="profile-page__rating-list">
-                {{#each ../ratings}}
-                    <li>
-                        {{#with recipeId}}
-                            <ul>
-                                <li>
-                                    <p>{{name}}</p>
-                                    <p>Rating: {{../stars}}</p>
-                                </li>
-                            </ul>
-                        {{/with}}
-                    </li>
-                {{/each}}
-            </ul>
-        {{/if}}
-    </section>
+  <section class="profile-page">
+    <h1 class="profile-page__header">Profile page</h1>
+    <h4 class="profile-page__username">Username: {{ username }}</h4>
+    {{#if ../ratings.length}}
+      <h4>Ratings: </h4>
+      <ul class="profile-page__rating-list">
+        {{#each ../ratings}}
+          <li>
+            {{#with recipeId}}
+              <ul>
+                <li>
+                  <p>{{name}}</p>
+                  <p>Rating: {{../stars}}</p>
+                </li>
+              </ul>
+            {{/with}}
+          </li>
+        {{/each}}
+      </ul>
+    {{/if}}
+  </section>
 {{/with}}
